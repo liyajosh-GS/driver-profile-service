@@ -1,0 +1,33 @@
+
+spring:
+  application:
+    name: driver-service
+
+  #  configure jdbc driver and datasource
+  data:
+    cassandra:
+      keyspace-name: driver_ks
+      contact-points: localhost
+      port: 9042
+      schema-action: CREATE
+      base-packages: com.ridemanagement.driverservice
+
+#logging
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE
+      hibernate:
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+
+# encryption key
+encryptor:
+  initialization-vector: "sampleSampleSamp"
+
+#cors
+cors:
+  allowedOrigin: ${UI_URL}
