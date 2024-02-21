@@ -1,12 +1,9 @@
 package com.ridemanagement.driverservice.controller;
 
-import com.ridemanagement.driverservice.dto.Driver;
 import com.ridemanagement.driverservice.dto.Vehicle;
-import com.ridemanagement.driverservice.entity.DriverKey;
 import com.ridemanagement.driverservice.entity.VehicleKey;
 import com.ridemanagement.driverservice.entity.VehicleModel;
 import com.ridemanagement.driverservice.entity.VehicleType;
-import com.ridemanagement.driverservice.service.impl.DriverService;
 import com.ridemanagement.driverservice.service.impl.VehicleService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;

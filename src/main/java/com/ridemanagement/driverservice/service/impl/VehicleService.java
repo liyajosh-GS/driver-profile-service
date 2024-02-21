@@ -1,14 +1,10 @@
 package com.ridemanagement.driverservice.service.impl;
 
-import com.ridemanagement.driverservice.dto.Document;
-import com.ridemanagement.driverservice.dto.Driver;
 import com.ridemanagement.driverservice.dto.Vehicle;
 import com.ridemanagement.driverservice.entity.*;
 import com.ridemanagement.driverservice.exception.NoSuchItemFoundException;
-import com.ridemanagement.driverservice.mapper.DriverDtoEntityMapper;
 import com.ridemanagement.driverservice.mapper.DtoEntityMapper;
 import com.ridemanagement.driverservice.mapper.VehicleDtoEntityMapper;
-import com.ridemanagement.driverservice.repository.DriverRepository;
 import com.ridemanagement.driverservice.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.repository.CassandraRepository;

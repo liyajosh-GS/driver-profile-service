@@ -1,9 +1,6 @@
 package com.ridemanagement.driverservice.mapper;
 
-import com.ridemanagement.driverservice.dto.Driver;
 import com.ridemanagement.driverservice.dto.Vehicle;
-import com.ridemanagement.driverservice.entity.DriverEntity;
-import com.ridemanagement.driverservice.entity.DriverKey;
 import com.ridemanagement.driverservice.entity.VehicleEntity;
 import com.ridemanagement.driverservice.entity.VehicleKey;
 import org.springframework.stereotype.Component;

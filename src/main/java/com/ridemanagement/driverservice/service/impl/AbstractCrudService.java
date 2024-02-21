@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Key;
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 

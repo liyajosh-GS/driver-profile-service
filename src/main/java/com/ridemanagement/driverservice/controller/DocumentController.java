@@ -4,7 +4,6 @@ package com.ridemanagement.driverservice.controller;
 import com.ridemanagement.driverservice.dto.Document;
 import com.ridemanagement.driverservice.entity.DocumentType;
 import com.ridemanagement.driverservice.service.impl.DocumentService;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

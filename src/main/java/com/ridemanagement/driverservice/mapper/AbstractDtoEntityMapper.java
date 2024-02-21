@@ -5,8 +5,6 @@ import com.ridemanagement.driverservice.entity.AbstractEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.UUID;
-
 public abstract class AbstractDtoEntityMapper <D extends AbstractDto, E extends AbstractEntity>  implements DtoEntityMapper<D, E> {
 
     @Autowired
@@ -29,14 +27,12 @@ public abstract class AbstractDtoEntityMapper <D extends AbstractDto, E extends 
     public D convertToDto(E entity) {
         D dto = modelMapper.map(entity, dtoClass);
         dto = updateKeyForDto(dto, entity);
-        System.out.println(dto);
         return dto;
     }
     @Override
     public E convertToEntity(D dto) {
         E entity = modelMapper.map(dto, entityClass);
         entity = updateKeyForEntity(entity, dto);
-        System.out.println(entity);
         return entity;
     }
 }
