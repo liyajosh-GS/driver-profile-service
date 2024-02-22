@@ -1,7 +1,7 @@
 server:
   servlet:
     context-path: /driver-service
-  port: 8080
+  port: 8082
 
 spring:
   application:
@@ -23,10 +23,10 @@ spring:
 
 eureka:
   instance:
-    prefer-ip-address: true
+    prefer-ip-address: false
   client:
-    fetch-registry: true
-    register-with-eureka: true
+    fetch-registry: false
+    register-with-eureka: false
   serviceUrl:
     defaultZone: http://localhost:8761/eureka
 
@@ -37,11 +37,6 @@ logging:
     org:
       springframework:
         security: TRACE
-      hibernate:
-        type:
-          descriptor:
-            sql:
-              BasicBinder: TRACE
 
 # encryption key
 encryptor:
@@ -54,5 +49,5 @@ cors:
 #kafka-topics
 kafka:
   topics:
-    - document-verification-scheduler : verification-task-scheduler
-    - driver-availability: driver-availability
+    document-verification-scheduler : verification-task-scheduler
+    driver-availability: driver-availability-updates

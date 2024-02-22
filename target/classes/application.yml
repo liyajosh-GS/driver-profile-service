@@ -1,13 +1,12 @@
 server:
   servlet:
     context-path: /driver-service
-  port: 8080
+  port: 8082
 
 spring:
   application:
     name: driver-service
 
-  #  configure jdbc driver and datasource
   data:
     cassandra:
       keyspace-name: driver_ks
@@ -16,12 +15,18 @@ spring:
       schema-action: CREATE
       base-packages: com.ridemanagement.driverservice
 
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
 eureka:
   instance:
-    prefer-ip-address: true
+    prefer-ip-address: false
   client:
-    fetch-registry: true
-    register-with-eureka: true
+    fetch-registry: false
+    register-with-eureka: false
   serviceUrl:
     defaultZone: http://localhost:8761/eureka
 
@@ -32,11 +37,6 @@ logging:
     org:
       springframework:
         security: TRACE
-      hibernate:
-        type:
-          descriptor:
-            sql:
-              BasicBinder: TRACE
 
 # encryption key
 encryptor:
@@ -45,3 +45,9 @@ encryptor:
 #cors
 cors:
   allowedOrigin: ${UI_URL}
+
+#kafka-topics
+kafka:
+  topics:
+    document-verification-scheduler : verification-task-scheduler
+    driver-availability: driver-availability-updates

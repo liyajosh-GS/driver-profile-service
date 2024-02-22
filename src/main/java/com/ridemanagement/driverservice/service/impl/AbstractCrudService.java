@@ -1,5 +1,6 @@
 package com.ridemanagement.driverservice.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ridemanagement.driverservice.dto.AbstractDto;
 import com.ridemanagement.driverservice.entity.AbstractEntity;
 import com.ridemanagement.driverservice.entity.AbstractKey;
@@ -10,6 +11,7 @@ import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -37,8 +39,8 @@ public abstract class AbstractCrudService <D extends AbstractDto, K extends Abst
     @Transactional(rollbackFor = Exception.class)
     public D create(D dto) {
         dto.setId(UUID.randomUUID());
+        dto.setCreatedTime(OffsetDateTime.now());
         E entity = mapper.convertToEntity(dto);
-        entity.setCreatedTime(Instant.now());
         entity = beforeOnSaveEntity(entity);
         E createdEntity = repository.save(entity);
         return mapper.convertToDto(createdEntity);
@@ -47,8 +49,8 @@ public abstract class AbstractCrudService <D extends AbstractDto, K extends Abst
     @Override
     @Transactional(rollbackFor = Exception.class)
     public D update(D dto) {
+        dto.setUpdateTime(OffsetDateTime.now());
         E entity = mapper.convertToEntity(dto);
-        entity.setUpdateTime(Instant.now());
         entity = beforeOnSaveEntity(entity);
         E updatedEntity = repository.save(entity);
         return mapper.convertToDto(updatedEntity);

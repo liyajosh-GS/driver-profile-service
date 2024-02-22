@@ -1,5 +1,6 @@
 package com.ridemanagement.driverservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ridemanagement.driverservice.entity.VerificationStatus;
@@ -29,6 +30,7 @@ public class Driver extends AbstractDto {
     private String email;
 
     @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dob;
 
     @NotNull
@@ -61,5 +63,7 @@ public class Driver extends AbstractDto {
     public double getRating() {
         return rating;
     }
+
+    private boolean isAvailable;
 
 }

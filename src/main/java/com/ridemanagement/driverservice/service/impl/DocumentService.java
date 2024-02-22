@@ -8,8 +8,8 @@ import com.ridemanagement.driverservice.exception.NoSuchItemFoundException;
 import com.ridemanagement.driverservice.mapper.DocumentDtoEntityMapper;
 import com.ridemanagement.driverservice.mapper.DtoEntityMapper;
 import com.ridemanagement.driverservice.repository.DocumentRepository;
-import com.ridemanagement.driverservice.service.async.verificationService.DocumentVerificationService;
-import com.ridemanagement.driverservice.service.async.verificationService.VerificationServiceFactory;
+import com.ridemanagement.driverservice.service.async.verification.DocumentVerificationService;
+import com.ridemanagement.driverservice.service.async.verification.VerificationServiceFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.stereotype.Service;
@@ -35,8 +35,8 @@ public class DocumentService extends AbstractCrudService <Document, DocumentKey,
     @Override
     protected DocumentEntity beforeOnSaveEntity(DocumentEntity documentEntity) {
         documentEntity.setVerificationStatus(VerificationStatus.PENDING);
-        DocumentVerificationService verificationService = verificationServiceFactory.getService(documentEntity.getDocumentType());
-        verificationService.startVerification(documentEntity);
+        DocumentVerificationService<DocumentKey, Document> verificationService = verificationServiceFactory.getService(documentEntity.getDocumentType());
+        //  verificationService.startVerification(documentEntity.getKey());
         return documentEntity;
     }
 

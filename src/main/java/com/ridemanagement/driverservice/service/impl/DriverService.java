@@ -1,5 +1,6 @@
 package com.ridemanagement.driverservice.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ridemanagement.driverservice.dto.Driver;
 import com.ridemanagement.driverservice.entity.DriverKey;
 import com.ridemanagement.driverservice.entity.VerificationStatus;
@@ -8,6 +9,7 @@ import com.ridemanagement.driverservice.exception.NoSuchItemFoundException;
 import com.ridemanagement.driverservice.mapper.DriverDtoEntityMapper;
 import com.ridemanagement.driverservice.mapper.DtoEntityMapper;
 import com.ridemanagement.driverservice.repository.DriverRepository;
+import com.ridemanagement.driverservice.service.async.availability.AvailabilityUpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,9 @@ public class DriverService extends AbstractCrudService <Driver, DriverKey, Drive
 
     @Autowired
     DriverDtoEntityMapper mapper;
+
+    @Autowired
+    AvailabilityUpdateService availabilityUpdateService;
 
     protected DriverService(CassandraRepository<DriverEntity, DriverKey> repository, DtoEntityMapper<Driver, DriverEntity> mapper) {
         super(repository, mapper);
@@ -43,17 +48,18 @@ public class DriverService extends AbstractCrudService <Driver, DriverKey, Drive
         return driverEntity;
     }
 
-    public Driver getDriverByCity (UUID id, String country, String state, String city){
-        return repository.findByKeyIdAndKeyCountryAndKeyStateAndKeyCity(id, country, state, city)
+    public Driver getDriverByKey (UUID id, String country, String state, String city, String postalCode){
+        return repository.findByKeyIdAndKeyCountryAndKeyStateAndKeyCityAndKeyPostalCode(id, country, state, city, postalCode)
                 .map(e -> mapper.convertToDto(e)).orElseThrow(() -> new NoSuchItemFoundException("Driver does not exist"));
     }
 
     @Override
     protected Driver readByKey(DriverKey driverKey) {
-        return getDriverByCity(driverKey.getId(),
+        return getDriverByKey(driverKey.getId(),
                 driverKey.getCountry(),
                 driverKey.getState(),
-                driverKey.getCity());
+                driverKey.getCity(),
+                driverKey.getPostalCode());
     }
 
     @Override
@@ -62,6 +68,18 @@ public class DriverService extends AbstractCrudService <Driver, DriverKey, Drive
                 driverKey.getCountry(),
                 driverKey.getState(),
                 driverKey.getCity());
+    }
+
+    public void updateAvailability(DriverKey driverKey, boolean isAvailable)  {
+        DriverEntity existingEntity = repository.findByKeyIdAndKeyCountryAndKeyStateAndKeyCityAndKeyPostalCode(driverKey.getId(),
+                        driverKey.getCountry(),
+                        driverKey.getState(),
+                        driverKey.getCity(),
+                        driverKey.getPostalCode())
+                .orElseThrow(() -> new NoSuchItemFoundException("Driver does not exist"));
+        existingEntity.setAvailable(isAvailable);
+        availabilityUpdateService.sendAvailabilityUpdate(driverKey, isAvailable);
+        repository.save(existingEntity);
     }
 
 }

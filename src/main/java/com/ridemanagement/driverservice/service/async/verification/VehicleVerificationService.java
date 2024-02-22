@@ -1,4 +1,4 @@
-package com.ridemanagement.driverservice.service.async.verificationService;
+package com.ridemanagement.driverservice.service.async.verification;
 
 import org.springframework.stereotype.Component;
 

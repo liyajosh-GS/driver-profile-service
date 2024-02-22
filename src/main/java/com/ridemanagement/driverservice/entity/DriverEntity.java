@@ -53,4 +53,8 @@ public class DriverEntity extends AbstractEntity {
     @Column("rating")
     private double rating;
 
+    @CassandraType(type = CassandraType.Name.BOOLEAN)
+    @Column("is_Available")
+    private boolean isAvailable;
+
 }

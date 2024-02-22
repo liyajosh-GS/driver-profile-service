@@ -1,5 +1,6 @@
 package com.ridemanagement.driverservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Data
@@ -19,18 +22,19 @@ public abstract class AbstractDto {
     private UUID id;
 
     @JsonIgnore
-    Instant createdTime;
+    OffsetDateTime createdTime;
 
     @JsonProperty
-    public Instant getCreatedTime(){
+    public OffsetDateTime getCreatedTime(){
         return createdTime;
     }
 
+
     @JsonIgnore
-    Instant updateTime;
+    OffsetDateTime updateTime;
 
     @JsonProperty
-    public Instant getUpdateTime(){
+    public OffsetDateTime getUpdateTime(){
         return updateTime;
     }
 }

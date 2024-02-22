@@ -11,7 +11,7 @@ import java.util.UUID;
 @Repository
 public interface DriverRepository extends CassandraRepository<DriverEntity, DriverKey> {
 
-    Optional<DriverEntity> findByKeyIdAndKeyCountryAndKeyStateAndKeyCity(UUID id, String country, String state, String city);
+    Optional<DriverEntity> findByKeyIdAndKeyCountryAndKeyStateAndKeyCityAndKeyPostalCode(UUID id, String country, String state, String city, String postalCode);
 
     void deleteByKeyIdAndKeyCountryAndKeyStateAndKeyCity(UUID id, String country, String state, String city);
 
