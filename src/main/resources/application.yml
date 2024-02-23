@@ -1,0 +1,53 @@
+server:
+  servlet:
+    context-path: /driver-service
+  port: 8082
+
+spring:
+  application:
+    name: driver-service
+
+  data:
+    cassandra:
+      keyspace-name: driver_ks
+      contact-points: localhost
+      port: 9042
+      schema-action: CREATE
+      base-packages: com.ridemanagement.driverservice
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+eureka:
+  instance:
+    prefer-ip-address: false
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+  serviceUrl:
+    defaultZone: http://localhost:8761/eureka
+
+
+#logging
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE
+
+# encryption key
+encryptor:
+  initialization-vector: "sampleSampleSamp"
+
+#cors
+cors:
+  allowedOrigin: ${UI_URL}
+
+#kafka-topics
+kafka:
+  topics:
+    document-verification-scheduler : verification-task-scheduler
+    driver-availability: driver-availability-updates

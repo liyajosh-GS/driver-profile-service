@@ -1,0 +1,4 @@
+kafka:
+  topics:
+    document-verification-scheduler : verification-task-scheduler
+    driver-availability: driver-availability-updates
