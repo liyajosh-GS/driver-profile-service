@@ -2,6 +2,7 @@ package com.ridemanagement.driverservice.controller;
 
 
 import com.ridemanagement.driverservice.dto.Document;
+import com.ridemanagement.driverservice.entity.DocumentKey;
 import com.ridemanagement.driverservice.entity.DocumentType;
 import com.ridemanagement.driverservice.service.impl.DocumentService;
 import jakarta.validation.constraints.NotNull;
@@ -21,7 +22,7 @@ public class DocumentController {
     DocumentService documentService;
 
     @PostMapping("/{ownerId}/{documentType}")
-    public ResponseEntity<Document> uploadId(@RequestParam("document") MultipartFile document,
+    public ResponseEntity<Document> upload(@RequestParam("document") MultipartFile document,
                                              @PathVariable @NotNull UUID ownerId,
                                              @PathVariable @NotNull DocumentType documentType){
         Document documentRequest = Document.builder()
@@ -34,11 +35,12 @@ public class DocumentController {
                 .body(response);
     }
 
-    @PutMapping("/{ownerId}/{documentType}/{id}")
+    @PatchMapping("/{id}/{ownerId}/{documentType}")
     public ResponseEntity<Document> update(@RequestParam("document") MultipartFile document,
+                                           @PathVariable @NotNull UUID id,
                                            @PathVariable @NotNull UUID ownerId,
-                                           @PathVariable @NotNull DocumentType documentType,
-                                           @PathVariable @NotNull UUID id){
+                                           @PathVariable @NotNull DocumentType documentType
+                                           ){
         Document documentRequest = Document.builder()
                 .ownerId(ownerId)
                 .documentType(documentType)
@@ -48,5 +50,29 @@ public class DocumentController {
         Document response = documentService.update(documentRequest);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(response);
+    }
+
+    @GetMapping("/{id}/{ownerId}")
+    public ResponseEntity<Document> getDocument(@PathVariable @NotNull UUID id,
+                                           @PathVariable @NotNull UUID ownerId){
+        DocumentKey documentKey = DocumentKey.builder()
+                .ownerId(ownerId)
+                .build();
+        documentKey.setId(id);
+        Document response = documentService.read(documentKey);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(response);
+    }
+
+    @DeleteMapping("/{id}/{ownerId}")
+    public ResponseEntity<Void> deleteDocument(@PathVariable @NotNull UUID id,
+                                                @PathVariable @NotNull UUID ownerId){
+        DocumentKey documentKey = DocumentKey.builder()
+                .ownerId(ownerId)
+                .build();
+        documentKey.setId(id);
+        documentService.delete(documentKey);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(null);
     }
 }

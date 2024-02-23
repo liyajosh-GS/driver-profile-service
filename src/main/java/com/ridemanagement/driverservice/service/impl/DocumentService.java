@@ -36,7 +36,7 @@ public class DocumentService extends AbstractCrudService <Document, DocumentKey,
     protected DocumentEntity beforeOnSaveEntity(DocumentEntity documentEntity) {
         documentEntity.setVerificationStatus(VerificationStatus.PENDING);
         DocumentVerificationService<DocumentKey, Document> verificationService = verificationServiceFactory.getService(documentEntity.getDocumentType());
-        //  verificationService.startVerification(documentEntity.getKey());
+        verificationService.startVerification(documentEntity.getKey());
         return documentEntity;
     }
 

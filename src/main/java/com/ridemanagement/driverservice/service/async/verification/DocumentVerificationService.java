@@ -9,7 +9,7 @@ import java.util.concurrent.CompletableFuture;
 
 public interface DocumentVerificationService<K extends AbstractKey, D extends AbstractDto> {
 
-    CompletableFuture<Void> startVerification(K k) throws JsonProcessingException;
+    CompletableFuture<Void> startVerification(K k);
 
     void updateVerificationStatus(D d);
 }

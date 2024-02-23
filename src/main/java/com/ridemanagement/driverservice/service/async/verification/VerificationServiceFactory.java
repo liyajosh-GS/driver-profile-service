@@ -18,12 +18,18 @@ public class VerificationServiceFactory {
     @Autowired
     private IdVerificationService idVerificationService;
 
+    @Autowired
+    private LicenseVerificationService licenseVerificationService;
+
+    @Autowired
+    private VehicleRegistrationVerificationService vehicleRegistrationVerificationService;
+
     @PostConstruct
     private void initializeVerificationServices() {
         this.verificationServices = new EnumMap<>(DocumentType.class);
         this.verificationServices.put(DocumentType.ID, idVerificationService);
-//        this.verificationServices.put(DocumentType.LICENSE, new LicenseVerificationService());
-//        this.verificationServices.put(DocumentType.VEHICLE_REGISTRATION, new VehicleRegistrationService());
+        this.verificationServices.put(DocumentType.LICENSE, licenseVerificationService);
+        this.verificationServices.put(DocumentType.VEHICLE_REGISTRATION, vehicleRegistrationVerificationService);
     }
 
     public DocumentVerificationService getService(DocumentType documentType) {

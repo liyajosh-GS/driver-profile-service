@@ -20,46 +20,21 @@ public abstract class AbstractDocumentVerificationService<K extends AbstractKey,
     protected abstract String getValue();
 
 
-    private String processMessage(K k){
-        try {
-            System.out.println("Sending Kafka message to scheduler to start ID verification");
-            ObjectMapper objectMapper = new ObjectMapper();
-            String key = objectMapper.writeValueAsString(k);
-            System.out.println("key " + key);
-            String value = getValue();
-            System.out.println("value " + value);
-
-            return key + "-" + value;
-        } catch (JsonProcessingException e) {
-            System.err.println("Error processing JSON: " + e.getMessage());
-            // Handle the exception or log it as needed
-        }
-
-        return "";
-    }
-
-
     @Override
-    public CompletableFuture<Void> startVerification(K k) throws JsonProcessingException {
+    public CompletableFuture<Void> startVerification(K k)  {
         return CompletableFuture.runAsync(() -> {
             try {
-                System.out.println("Sending Kafka message to scheduler to start ID verification");
-                ObjectMapper objectMapper = new ObjectMapper();
                 String key = objectMapper.writeValueAsString(k);
-                System.out.println("key " + key);
                 String value = getValue();
-                System.out.println("value " + value);
                 producer.sendMessage(key + "-" + value);
             } catch (JsonProcessingException e) {
-                System.err.println("Error processing JSON: " + e.getMessage());
+                throw new RuntimeException("Error processing JSON: " + e.getMessage());
                 // Handle the exception or log it as needed
             } catch (RuntimeException e){
-                System.err.println("Run time: " + e.getMessage());
+                throw new RuntimeException("Run time: " + e.getMessage());
             }
 
         });
-       // kafkaMessenger.sendMessage(kafkaTemplate, getTopic(), processMessage(k));
-
     }
 
     @Override

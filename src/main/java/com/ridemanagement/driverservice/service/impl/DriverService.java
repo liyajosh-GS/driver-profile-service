@@ -1,10 +1,9 @@
 package com.ridemanagement.driverservice.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ridemanagement.driverservice.dto.Driver;
+import com.ridemanagement.driverservice.entity.DriverEntity;
 import com.ridemanagement.driverservice.entity.DriverKey;
 import com.ridemanagement.driverservice.entity.VerificationStatus;
-import com.ridemanagement.driverservice.entity.DriverEntity;
 import com.ridemanagement.driverservice.exception.NoSuchItemFoundException;
 import com.ridemanagement.driverservice.mapper.DriverDtoEntityMapper;
 import com.ridemanagement.driverservice.mapper.DtoEntityMapper;

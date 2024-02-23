@@ -1,6 +1,5 @@
 package com.ridemanagement.driverservice.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ridemanagement.driverservice.dto.Driver;
 import com.ridemanagement.driverservice.entity.DriverKey;
 import com.ridemanagement.driverservice.service.impl.DriverService;
@@ -12,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -37,7 +35,7 @@ public class DriverController {
     }
 
     @GetMapping("/{id}/{country}/{state}/{city}/{postalCode}")
-    public ResponseEntity<Driver> getByCity(@PathVariable @NotNull UUID id,
+    public ResponseEntity<Driver> getByKey(@PathVariable @NotNull UUID id,
                                       @PathVariable @NotNull @NotEmpty String country,
                                       @PathVariable @NotNull @NotEmpty String state,
                                       @PathVariable @NotNull @NotEmpty String city, @PathVariable @NotNull @NotEmpty String postalCode){
@@ -59,15 +57,9 @@ public class DriverController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Driver> get(@PathVariable @NotNull UUID id){
+    public ResponseEntity<Driver> getById(@PathVariable @NotNull UUID id){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(driverService.getDriverById(id));
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Driver>> getAll(){
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(driverService.readAll());
     }
 
     @DeleteMapping("/{id}")

@@ -6,10 +6,12 @@ import com.ridemanagement.driverservice.entity.DocumentType;
 import org.springframework.stereotype.Component;
 
 @Component
-public class IdVerificationService extends AbstractPersonalVerificationService<DocumentKey, Document> {
+public class VehicleRegistrationVerificationService extends AbstractPersonalVerificationService<DocumentKey, Document> implements PersonalVerificationService <DocumentKey, Document> {
 
     @Override
     protected String getValue() {
-        return String.format("{\"documentType\":\"%s\"}", DocumentType.ID);
+        return String.format("{\"documentType\":\"%s\"}", DocumentType.VEHICLE_REGISTRATION);
     }
 }
+
+

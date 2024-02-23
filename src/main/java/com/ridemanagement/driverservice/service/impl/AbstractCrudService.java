@@ -1,6 +1,5 @@
 package com.ridemanagement.driverservice.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ridemanagement.driverservice.dto.AbstractDto;
 import com.ridemanagement.driverservice.entity.AbstractEntity;
 import com.ridemanagement.driverservice.entity.AbstractKey;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
